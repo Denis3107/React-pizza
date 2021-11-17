@@ -34,7 +34,7 @@ const PizzaBlock = ({name, price, imageUrl,types,sizes}) => {
                 <ul>
                     {
                         sizes.map((size, index) => (
-                        <li key = {size} className={activeSize === index&& "active"} onClick={()=> setActiveSize(index)}> {size} cм.</li> ))
+                        <li key = {size} className={activeSize === index? "active":""} onClick={()=> setActiveSize(index)}> {size} cм.</li> ))
                     }
                 </ul>
             </div>

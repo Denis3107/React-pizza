@@ -1,23 +1,19 @@
 import Header from "./components/Header/Header";
 import React, {useEffect, useState} from "react";
 import Main from "./components/Main/Main";
-import axios from "axios";
 
-function App() {
+function App(props) {
 
-    const [pizzas, setPizzas] = useState([])
-
-    useEffect(()=>{
-        axios.get("http://localhost:3000/db.json")
-            .then(({data}) => setPizzas(data.pizzas))
-    }, [])
-
-  return (
+    return (
       <div className="wrapper">
         <Header/>
-        <Main items = {pizzas}/>
+        <Main />
       </div>
   );
 }
 
+
 export default App;
+
+
+

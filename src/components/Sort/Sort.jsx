@@ -1,10 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {connect} from "react-redux";
+import {setSortAction} from "../../Redux/Redusers/sortReduser";
 
-const Sort = ({items}) => {
+const Sort = ({items,setSortAction}) => {
     const [activePopup, setActive] = useState(false)
     const [activeItem, SetItem] = useState(0)
     const element = useRef()
-    const activeLabel = items[activeItem]
+    const activeLabel = items[activeItem].name
 
     useEffect(()=>{
         document.body.addEventListener("click", clickBody)
@@ -17,9 +19,10 @@ const Sort = ({items}) => {
 
     }
 
-    function onClickItem(index){
+    function onClickItem(index, type){
         SetItem(index)
         onClickPopUp(false)
+        setSortAction(type)
     }
 
     function onClickPopUp(status){
@@ -29,7 +32,7 @@ const Sort = ({items}) => {
     return (
         <div className="sort" ref = {element}>
             <div className="sort__label">
-                <svg className={activePopup && "rotated"}
+                <svg className={activePopup ? "rotated":undefined}
                     width="10"
                     height="6"
                     viewBox="0 0 10 6"
@@ -48,8 +51,8 @@ const Sort = ({items}) => {
             <div className="sort__popup">
                 <ul>
                     {
-                        items && items.map((item, index) => (<li key = {`${item}_${index}`} className={activeItem === index? "active":""}
-                                                                 onClick={()=> onClickItem(index)}>{item}</li>))
+                        items && items.map((item, index) => (<li key = {`${item}_${index}`} className={activeItem === index? "active":undefined}
+                                                                 onClick={()=> onClickItem(index, item)}>{item.name}</li>))
                     }
                 </ul>
             </div>}
@@ -57,4 +60,7 @@ const Sort = ({items}) => {
     );
 };
 
-export default Sort;
+let mapStateToProps = (state) => ({
+    sort: state.sort
+})
+export default connect(mapStateToProps,{setSortAction})(Sort) ;

@@ -2,14 +2,11 @@ import React, {useEffect} from 'react';
 import Categories from "../Categories/Categories";
 import Sort from "../Sort/Sort";
 import PizzaBlock from "./PizzaBlock/PizzaBlock";
-import {connect} from "react-redux";
-import {getPizzasThank} from "../../Redux/Redusers/pizzaReduser";
 import LoadingBlock from "./LoadingBlock/LoadingBlock";
 
-const Main = ({pizzas, getPizzasThank,status,sortR}) => {
+const Main = ({pizzas, getPizzasThank,status,sortR, setSortAction, basket}) => {
     const category = [ "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
     const sort = [{name:"популярности", type:"popylar",order : "asc"}, {name:"цена по возростанию", type: "price", order : "asc"},{name:"цена по убыванию", type: "price",order : "desc" }]
-
     useEffect(()=>{
         getPizzasThank(sortR)
     }, [sortR])
@@ -25,7 +22,11 @@ const Main = ({pizzas, getPizzasThank,status,sortR}) => {
                 <div className="content__items">
                     {
 
-                        status ? pizzas.map(item => <PizzaBlock {...item} key = {item.id}/>) :  Array(8)
+                        status ? pizzas.map(item => <PizzaBlock
+                            {...item}
+                            setSortAction = {setSortAction}
+                            countPizza={basket.items[item.id] && basket.items[item.id].length}
+                            key = {item.id}/>) :  Array(8)
                             .fill(0)
                             .map((_, index) => <LoadingBlock key={index} />)
                     }
@@ -36,11 +37,5 @@ const Main = ({pizzas, getPizzasThank,status,sortR}) => {
     );
 };
 
-let mapStateToProps = (state) => ({
-    pizzas: state.pizza.pizzas,
-    status: state.pizza.isLoaded,
-    sortR: state.sort
-})
 
-
-export default connect(mapStateToProps,{getPizzasThank})(Main);
+export default Main;

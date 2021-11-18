@@ -1,8 +1,9 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
 const Button = (props) => {
     return (
-        <button className={props.className} >{props.children}</button>
+       <div className={props.className} onClick={props.onClick}>{props.children}</div>
     );
 };
 

@@ -25,7 +25,7 @@ const Main = ({pizzas, getPizzasThank,status,sortR, setSortAction, basket}) => {
                         status ? pizzas.map(item => <PizzaBlock
                             {...item}
                             setSortAction = {setSortAction}
-                            countPizza={basket.items[item.id] && basket.items[item.id].length}
+                            countPizza={basket.items[item.id] && basket.items[item.id].items.length}
                             key = {item.id}/>) :  Array(8)
                             .fill(0)
                             .map((_, index) => <LoadingBlock key={index} />)

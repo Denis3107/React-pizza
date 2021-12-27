@@ -5,14 +5,24 @@ import {Route} from "react-router-dom";
 import Basket from "./components/Basket/Basket";
 import {connect} from "react-redux";
 import {getPizzasThank} from "./Redux/Redusers/pizzaReduser";
-import {setSortAction} from "./Redux/Redusers/basketReduser";
+import {
+    ClearAllAction,
+    minusItemAction,
+    plusItemAction,
+    removeItemAction,
+    setSortAction
+} from "./Redux/Redusers/basketReduser";
 
 function App(props) {
     return (
       <div className="wrapper">
           <Header {...props.basket}/>
           <Route path="/" render = {()=><Main {...props}/>}exact />
-          <Route path="/basket" component={Basket} exact />
+          <Route path="/basket" render = {()=><Basket {...props.basket}
+                                                      ClearAllAction = {props.ClearAllAction}
+                                                      removeItemAction = {props.removeItemAction}
+                                                      plusItemAction ={props.plusItemAction}
+                                                      minusItemAction = {props.minusItemAction}/>} exact />
       </div>
   );
 }
@@ -25,7 +35,9 @@ let mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps,{getPizzasThank, setSortAction})(App);
+export default connect(mapStateToProps,
+    {getPizzasThank, setSortAction,ClearAllAction,
+                        removeItemAction,plusItemAction,minusItemAction})(App);
 
 
 

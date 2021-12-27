@@ -51,7 +51,7 @@ const Sort = ({items,setSortAction}) => {
             <div className="sort__popup">
                 <ul>
                     {
-                        items && items.map((item, index) => (<li key = {`${item}_${index}`} className={activeItem === index? "active":undefined}
+                        items && items.map((item, index) => (<li key = {`${item}_${index}`} className={activeItem === index ? "active":undefined}
                                                                  onClick={()=> onClickItem(index, item)}>{item.name}</li>))
                     }
                 </ul>
